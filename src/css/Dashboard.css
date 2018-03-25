@@ -1,5 +1,7 @@
 .dashboard {
-  padding: 25px;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-top: 5%;
 }
 
 .dashboard-tile {
@@ -7,13 +9,22 @@
   margin: 10px;
 }
 
-.share-tile-copy {
-  cursor: pointer;
-  background-color: #F5F5F5;
-  border-radius: 3px;
-  padding: 5px;
-  font-family: monospace;
-  height: 12px;
-  white-space:nowrap;
-  overflow-x: scroll;
+.new-request {
+}
+
+.new-request-container {
+  padding: 25px;
+}
+
+.new-request-container input {
+  width: 100%;
+}
+
+.request-field {
+  font-size: 4em;
+}
+
+
+.new-request-input {
+  width: 100px;
 }
