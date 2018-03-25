@@ -10,6 +10,8 @@ import Snackbar from 'material-ui/Snackbar';
 
 import Upload from 'react-icons/lib/fa/upload';
 import Floppy from 'react-icons/lib/fa/floppy-o';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import { Grid, Col, Row } from 'react-styled-flexboxgrid';
 
