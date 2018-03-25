@@ -30,6 +30,8 @@
 }
 
 .profile-image {
-  width: 100%;
-  align-self: center;
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
 }

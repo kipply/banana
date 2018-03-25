@@ -26,6 +26,7 @@ class Dashboard extends Component {
       image: '',
       toastOpen: false,
       toastMessage: '',
+      pictures: ["https://i.redd.it/1sbbm5bdpon01.jpg","http://i0.kym-cdn.com/photos/images/original/001/220/093/629.jpg"]
     };
   }
 
@@ -139,16 +140,22 @@ class Dashboard extends Component {
                   onChange={(e, val) => { this.setState({ description: val }); }}
                 />
               </Col>
-              <RaisedButton
+              <RaisedButton /* This is the upload picture button */
                   type="file"
                   icon={<Upload />}
+                  label=""
                   backgroundColor="#4DD0EA"
                   onClick={() => this.upload.click()}
                 />
             </Row>
           </Grid>
           <Row>
-            <img className="preview" src="https://i.redd.it/1sbbm5bdpon01.jpg"/> {/* Just a test to show it works */}
+            <tbody>
+              {this.state.pictures.map(function(picture, i){
+        return <img class = "preview" src={picture} />;
+    })}
+
+            </tbody>
           </Row>
         </Paper>
         <RaisedButton
