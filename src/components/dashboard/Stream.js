@@ -12,6 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 
 import ChevronDown from 'react-icons/lib/fa/chevron-down';
 
@@ -26,13 +27,13 @@ class Stream extends Component {
       answer: '',
       requests: [],
       open: false,
+      answersOpen: false,
     };
   }
 
   componentWillMount() {
     this.authListener = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
-        this.props.history.push('/');
       } else {
         this.setState({ user });
       }
@@ -42,6 +43,9 @@ class Stream extends Component {
     requestsRef.once('value', (snapshot) => {
       var loadedRequests = [];
       const requests = snapshot.val();
+      if (!requests) {
+        return;
+      }
       Object.keys(requests).forEach(lang => {
         var items = requests[lang];
         Object.keys(items).forEach(key => {
@@ -68,6 +72,11 @@ class Stream extends Component {
       this.setState({open: false});
     };
 
+
+      handleAnswersClose = () => {
+        this.setState({answersOpen: false});
+      };
+
   submitAnswer = () => {
     firebase.database().ref('users').child(`${this.state.user.uid}`).once('value', (snapshot) => {
       var oldPoints = snapshot.val().points;
@@ -80,6 +89,35 @@ class Stream extends Component {
       user: this.state.user.uid,
     });
     this.handleClose();
+  }
+
+  showAnswers = (ans) => {
+    var content = [];
+    if (!ans){
+      return;
+    }
+    var matthew = [];
+    Object.keys(ans).forEach(item => {
+        console.log(ans[item]);
+          const imageSrc = firebase.storage().ref('user-dps').child(`${ans[item].user}.jpg`).getDownloadURL();
+          var name = firebase.database().ref('users').child(`${ans[item].user}/profile/name`).once('value', (snapshot) => { return name = snapshot.val()}).then();
+          var t = (<div><Row>
+                 <div className="pprofile-pic-container">
+                   <div className="pprofile-image-container">
+                     <Async promise={imageSrc} then={(val) => <img  className="profile-image" src={val}/>} />
+                   </div>
+                 </div>
+                 <Async promise={name} then={(val) => <div className="vertical-center">{name}</div>} />
+               </Row>
+               <Row>
+                <Col xs={10}>
+                  <span>{ans[item].answer}</span>
+                 </Col>
+              </Row></div>)
+
+              matthew.push(t);
+        })
+    this.setState({answersOpen: true, answerAnswers: matthew});
   }
 
   render() {
@@ -97,7 +135,7 @@ class Stream extends Component {
   ];
     return (
       <div>
-      <StreamList requests={this.state.requests} answerQuestion={this.answerQuestion}/>
+      <StreamList requests={this.state.requests} answerQuestion={this.answerQuestion} showAnswers={this.showAnswers}/>
       <Dialog
          title="Answer Question"
          actions={actions}
@@ -105,15 +143,28 @@ class Stream extends Component {
          open={this.state.open}
          onRequestClose={this.handleClose}
        >
-       <TextField
-         hintText="Input your answer?"
-         multiLine
-         value={this.state.answer}
-         className="new-request-input"
-         fullWidth
-         onChange={(e, val) => { this.setState({ answer: val }); }}
-       />
+         <TextField
+           hintText="Input your answer?"
+           multiLine
+           value={this.state.answer}
+           className="new-request-input"
+           fullWidth
+           onChange={(e, val) => { this.setState({ answer: val }); }}
+         />
        </Dialog>
+       <Dialog
+          title="Question Answers"
+          actions={<FlatButton
+            label="Cancel"
+            primary={true}
+            onClick={this.handleAnswersClose}
+          />}
+          modal={false}
+          open={this.state.answersOpen}
+          onRequestClose={this.handleAnswersClose}
+        >
+          {this.state.answerAnswers}
+        </Dialog>
        </div>
     );
   }
@@ -152,6 +203,10 @@ function StreamList(props) {
            />
            </Col>
          </Row>
+         <FlatButton
+           label="Show Answers"
+           onClick={() => props.showAnswers(data.answers)}
+         />
        </Paper>
        </div>
      );
