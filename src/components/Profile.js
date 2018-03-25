@@ -17,6 +17,87 @@ import { Grid, Col, Row } from 'react-styled-flexboxgrid';
 
 import '../css/Profile.css';
 
+const languageOptions = [];
+
+const languages = {
+    "AF":"Afrikanns",
+    "SQ":"Albanian",
+    "AR":"Arabic",
+    "HY":"Armenian",
+    "EU":"Basque",
+    "BN":"Bengali",
+    "BG":"Bulgarian",
+    "CA":"Catalan",
+    "KM":"Cambodian",
+    "ZH":"Chinese (Mandarin)",
+    "HR":"Croation",
+    "CS":"Czech",
+    "DA":"Danish",
+    "NL":"Dutch",
+    "EN":"English",
+    "ET":"Estonian",
+    "FJ":"Fiji",
+    "FI":"Finnish",
+    "FR":"French",
+    "KA":"Georgian",
+    "DE":"German",
+    "EL":"Greek",
+    "GU":"Gujarati",
+    "HE":"Hebrew",
+    "HI":"Hindi",
+    "HU":"Hungarian",
+    "IS":"Icelandic",
+    "ID":"Indonesian",
+    "GA":"Irish",
+    "IT":"Italian",
+    "JA":"Japanese",
+    "JW":"Javanese",
+    "KO":"Korean",
+    "LA":"Latin",
+    "LV":"Latvian",
+    "LT":"Lithuanian",
+    "MK":"Macedonian",
+    "MS":"Malay",
+    "ML":"Malayalam",
+    "MT":"Maltese",
+    "MI":"Maori",
+    "MR":"Marathi",
+    "MN":"Mongolian",
+    "NE":"Nepali",
+    "NO":"Norwegian",
+    "FA":"Persian",
+    "PL":"Polish",
+    "PT":"Portuguese",
+    "PA":"Punjabi",
+    "QU":"Quechua",
+    "RO":"Romanian",
+    "RU":"Russian",
+    "SM":"Samoan",
+    "SR":"Serbian",
+    "SK":"Slovak",
+    "SL":"Slovenian",
+    "ES":"Spanish",
+    "SW":"Swahili",
+    "SV":"Swedish",
+    "TA":"Tamil",
+    "TT":"Tatar",
+    "TE":"Telugu",
+    "TH":"Thai",
+    "BO":"Tibetan",
+    "TO":"Tonga",
+    "TR":"Turkish",
+    "UK":"Ukranian",
+    "UR":"Urdu",
+    "UZ":"Uzbek",
+    "VI":"Vietnamese",
+    "CY":"Welsh",
+    "XH":"Xhosa"
+}
+
+for (var lang in languages) {
+  languageOptions.push(<MenuItem value={lang}  primaryText={`${languages[lang]}`} />);
+}
+
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -25,12 +106,18 @@ class Profile extends Component {
       user: firebase.auth().currentUser,
       name: '',
       language: 'EN',
+      languages: [],
       description: '',
       image: '',
       toastOpen: false,
       toastMessage: '',
     };
   }
+
+
+  handleLangChang = (event, index, language) => {
+    this.setState({language});
+  };
 
   componentWillMount() {
     this.authListener = firebase.auth().onAuthStateChanged((user) => {
@@ -48,7 +135,7 @@ class Profile extends Component {
             .then((url) => {
               this.setState({
                 name: profile.name,
-                languae: profile.language,
+                languages: profile.languages,
                 description: profile.description,
                 image: url,
               });
@@ -77,10 +164,13 @@ class Profile extends Component {
       profileRef.set({
         name: this.state.name,
         description: this.state.description,
+        languages: this.state.languages,
         image: this.state.image,
       }).then(() => {
         this.setState({ toastMessage: 'Saved!' });
-
+        profileRef.child('languages').push({
+          l: this.state.language,
+        })
         // Upload file if one was uploaded
         if (this.state.file) {
           const storageRef = firebase.storage().ref('/user-dps/');
@@ -129,9 +219,9 @@ class Profile extends Component {
                   value={this.state.language}
                   onChange={this.handleLangChang}
                   maxHeight={200}
+                  floatingLabelText="Add a Language"
                 >
-                <MenuItem value={"EN"} primaryText="English" />
-                <MenuItem value={"FR"} primaryText="French" />
+                {languageOptions}
                 </SelectField>
               </Col>
               <Col lg={8} className="profile-pic-container">

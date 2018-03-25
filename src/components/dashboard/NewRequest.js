@@ -120,8 +120,20 @@ class NewRequest extends Component {
         this.props.history.push('/');
       } else {
         this.setState({ user });
-
         const profileRef = firebase.database().ref(`users/${this.state.user.uid}/profile`);
+
+               profileRef.once('value', (snapshot) => {
+                 const profile = snapshot.val();
+
+                 firebase.storage().ref('user-dps').child(`${this.state.user.uid}.jpg`).getDownloadURL()
+                   .then((url) => {
+                     this.setState({
+                       name: profile.name,
+                       image: url,
+                     });
+                   });
+               });
+
       }
     });
   }
@@ -180,7 +192,12 @@ class NewRequest extends Component {
       <div className="new-request">
         <Paper className="new-request-container" zDepth={1}>
           <Row>
-            persons name and profile
+            <div className="pprofile-pic-container">
+              <div className="pprofile-image-container">
+                <img className="pprofile-image" src={this.state.image} alt="profile" />
+              </div>
+            </div>
+            <div className="vertical-center">{this.state.name}</div>
           </Row>
           <Row>
             <TextField
