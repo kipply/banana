@@ -101,7 +101,7 @@ const languages = {
 }
 
 for (var lang in languages) {
-  languageOptions.push(<MenuItem value={lang} key={languages.indexOf(lang)} primaryText={`Item ${languages[lang]}`} />);
+  languageOptions.push(<MenuItem value={lang} key={languages[lang]} primaryText={`Item ${languages[lang]}`} />);
 }
 
 class NewRequest extends Component {
