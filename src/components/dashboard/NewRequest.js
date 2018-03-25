@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Slider from 'material-ui/Slider';
 
 import Upload from 'react-icons/lib/fa/upload';
 import Floppy from 'react-icons/lib/fa/floppy-o';
@@ -31,7 +32,7 @@ class NewRequest extends Component {
       user: firebase.auth().currentUser,
       request: '',
       language: 10,
-      points: '',
+      difficulty: 0.5,
       toastOpen: false,
       toastMessage: '',
     };
@@ -69,37 +70,32 @@ class NewRequest extends Component {
   }
 
   addRequest() {
-    // let ok = true;
-    // // Check values
-    // if (this.state.name.length > 100) {
-    //   ok = false;
-    //   this.setState({ toastMessage: 'Dude why is your name so long? Save not successful.' });
-    //   this.setState({ toastOpen: true });
-    // }
-    //
-    // // Perform save
-    // if (ok) {
-    //   const profileRef = firebase.database().ref(`users/${this.state.user.uid}/profile`);
-    //   profileRef.set({
-    //     name: this.state.name,
-    //     description: this.state.description,
-    //     image: this.state.image,
-    //   }).then(() => {
-    //     this.setState({ toastMessage: 'Saved!' });
-    //
-    //     // Upload file if one was uploaded
-    //     if (this.state.file) {
-    //       const storageRef = firebase.storage().ref('/user-dps/');
-    //
-    //       const dpRef = storageRef.child(`${this.state.user.uid}.jpg`);
-    //       dpRef.put(this.state.file).then(() => {
-    //         this.setState({ toastOpen: true });
-    //       });
-    //     } else {
-    //       this.setState({ toastOpen: true });
-    //     }
-    //   });
-    // }
+    let ok = true;
+    // Check values
+    if (!this.state.request) {
+      ok = false;
+      this.setState({ toastMessage: 'Request field cannot be blank.' });
+      this.setState({ toastOpen: true });
+    }
+
+    // Perform save
+    if (ok) {
+      const requestsRef = firebase.database().ref(`/requests/${this.state.language}`);
+      var req = requestsRef.push({
+        user: this.state.user.uid,
+        request: this.state.request,
+        difficulty: this.state.difficulty,
+      }).then((snap) => {
+        var newId = snap.key;
+
+        const usersRef = firebase.database().ref(`/users/${this.state.user.uid}/requests/`);
+        usersRef.push({
+          id: newId,
+        });
+        this.setState({ toastMessage: 'Successfully made request!' });
+        this.setState({ toastOpen: true });
+      });
+    }
   }
 
   handleImageChange(e) {
@@ -133,27 +129,37 @@ class NewRequest extends Component {
             <TextField
               hintText="What is your request?"
               multiLine
-              value={this.state.description}
+              value={this.state.request}
               style={{fontSize: 25}}
               className="new-request-input"
               fullWidth
-              onChange={(e, val) => { this.setState({ description: val }); }}
+              onChange={(e, val) => { this.setState({ request: val }); }}
             />
           </Row>
-          <Row>
-          <SelectField
-            value={this.state.language}
-            onChange={this.handleLangChang}
-            maxHeight={200}
-          >
-            {items}
-          </SelectField>
-          </Row>
-          <RaisedButton
-            label="REQUEST"
-            disabled={this.state.name === ''}
-            onClick={() => this.addRequest()}
+          <span style={{color: 'grey', position: 'relative', top: 15}}> Request difficulty</span>
+          <Slider
+            step={0.10}
+            value={this.state.difficulty}
+            onChange={ (e, val) => this.setState({difficulty: val}) }
           />
+          <Row>
+            <Col>
+              <SelectField
+                value={this.state.language}
+                onChange={this.handleLangChang}
+                maxHeight={200}
+              >
+                {items}
+              </SelectField>
+            </Col>
+            <Col>
+              <RaisedButton
+                label="REQUEST"
+                disabled={this.state.name === ''}
+                onClick={() => this.addRequest()}
+              />
+            </Col>
+          </Row>
         </Paper>
         <Snackbar
           open={this.state.toastOpen}
