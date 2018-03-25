@@ -5,6 +5,8 @@ import { Grid, Col, Row } from 'react-styled-flexboxgrid';
 
 import * as firebase from 'firebase';
 
+import NewRequest from '../components/dashboard/NewRequest'
+
 import '../css/Dashboard.css';
 
 class Dashboard extends Component {
@@ -33,27 +35,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <h1>Dashboard</h1>
-        <Grid>
-          <Row>
-            <Col xs={12} md={8}>
-              big boi column
-            </Col>
-            <Col xs={12} md={4}>
-              <Row>
-                <Col xs={4} sm={12}>
-                  column
-                </Col>
-                <Col xs={4} sm={12}>
-                  column
-                </Col>
-                <Col xs={4} sm={12}>
-                  column
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Grid>
+              <NewRequest/>
       </div>
     );
   }

@@ -15,7 +15,7 @@ import { Grid, Col, Row } from 'react-styled-flexboxgrid';
 
 import '../css/Profile.css';
 
-class Dashboard extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
 
@@ -178,4 +178,4 @@ class Dashboard extends Component {
   }
 }
 
-export default withRouter(Dashboard);
+export default withRouter(Profile);
