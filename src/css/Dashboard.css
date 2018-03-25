@@ -28,3 +28,30 @@
 .new-request-input {
   width: 100px;
 }
+
+.pprofile-pic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.pprofile-image-container {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  overflow: hidden;
+  margin: 15px;
+}
+
+.pprofile-image {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+}
+
+.vertical-center {
+  height: 100px;
+  line-height: 100px;
+  white-space: nowrap;
+}
