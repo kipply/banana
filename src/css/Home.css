@@ -1,3 +1,27 @@
 .thisishome{
   text-align:center;
+
+  font-size:50px;
+
+  color:#2196F3;
+}
+
+.description{
+  text-align:center;
+
+  font-size:20px;
+}
+
+.description span{
+  background-color: #2196F3;
+
+  color:white;
+  padding:20px;
+}
+
+.main {
+  background-image: url('../photos/bg.png');
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
