@@ -20,7 +20,7 @@
 }
 
 .main {
-  background-color: #007769;
+  background-image: url('../photos/bg.png');
   display: flex;
   flex-direction: column;
   height: 100vh;
