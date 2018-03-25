@@ -46,6 +46,7 @@ class Header extends Component {
       <div className="navigation">
         <AppBar
           title="Immitia"
+          style={{backgroundColor: "#007769"}}
           iconElementLeft={
             <IconButton onClick={() => this.setState({ drawerOpen: !this.state.drawerOpen })}>
               <MenuIcon />
