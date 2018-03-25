@@ -17,6 +17,8 @@ import { Grid, Col, Row } from 'react-styled-flexboxgrid';
 
 // delettttt
 const items = [];
+items.push(<MenuItem primaryText={`banaan`} />);
+
 for (let i = 0; i < 100; i++ ) {
   items.push(<MenuItem value={i} key={i} primaryText={`Item ${i}`} />);
 }
@@ -125,7 +127,7 @@ class NewRequest extends Component {
           <Row>
           <SelectField
             value={this.state.language}
-            onChange={this.handleChange}
+            onChange={this.handleLangChang}
             maxHeight={200}
           >
             {items}
