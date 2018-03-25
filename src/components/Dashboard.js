@@ -35,7 +35,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-              <NewRequest/>
+        <NewRequest/>
       </div>
     );
   }
