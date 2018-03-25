@@ -59,10 +59,14 @@ class AuthButton extends Component {
         const usersRef = this.state.db.ref('users/');
         usersRef.child(result.user.uid).once('value', (snapshot) => {
           const exists = (snapshot.val() !== null);
+
           if (!exists) {
-            // Put user init things
+            //thingy here
           }
-          this.props.history.push('/dashboard');
+          this.props.history.push(
+            pathname: '/dashboard',
+            state: {detail: !exists}
+          );
         });
       }
     }).catch((error) => { logError(error); });
