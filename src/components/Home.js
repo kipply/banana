@@ -6,7 +6,7 @@ export default class Home extends Component {
   render() {
     return (
         <div className="main">
-              <img src = {require("../photos/plane.jpg" id = "bg")} />
+              <img src ="../photos/plane.jpg" id = "bg"/>
         </div>
     );
   }
