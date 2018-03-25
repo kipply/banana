@@ -44,6 +44,7 @@ class Header extends Component {
   render() {
     return (
       <div className="navigation">
+      <Link to="/main">
         <AppBar
           title="Immitia"
           style={{backgroundColor: "#007769"}}
@@ -55,6 +56,7 @@ class Header extends Component {
         >
           <AuthButton signedIn={this.state.signedIn} />
         </AppBar>
+      </Link>
         <Drawer open={this.state.drawerOpen} docked={false}>
           <IconButton onClick={() => this.setState({ drawerOpen: !this.state.drawerOpen })}>
             <CloseIcon />

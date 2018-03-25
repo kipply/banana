@@ -64,9 +64,9 @@ class AuthButton extends Component {
               name: "",
             });
             this.state.db.ref(`users/${result.user.uid}/points`).set(0);
-            this.props.history.push('/profile');
+
           }
-          this.props.history.push('/dashboard');
+          this.props.history.push('/triage');
         });
       }
     }).catch((error) => { logError(error); });
