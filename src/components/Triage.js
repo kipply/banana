@@ -47,8 +47,8 @@ class Triage extends Component {
             Get started by telling us if you are an immigrant or local!
           </CardText>
           <CardActions>
-            <FlatButton label="Immigrant" />
-            <FlatButton label="Local" />
+            <FlatButton label="Immigrant" onClick={() => this.props.history.push('/dashboard')}/>
+            <FlatButton label="Local" onClick={() => this.props.history.push('/dashboard')}/>
           </CardActions>
         </Card>
       </div>
