@@ -12,7 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import '../css/Dashboard.css';
 
-class Dashboard extends Component {
+class Triage extends Component {
   constructor(props) {
     super(props);
 
