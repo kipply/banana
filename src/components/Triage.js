@@ -5,6 +5,8 @@ import { Grid, Col, Row } from 'react-styled-flexboxgrid';
 
 import * as firebase from 'firebase';
 
+import Plane from '../photos/plane.jpg';
+
 import NewRequest from '../components/dashboard/NewRequest'
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -39,26 +41,14 @@ class Triage extends Component {
     return (
       <div className="dashboard">
         <Card>
-          <CardHeader
-            title="URL Avatar"
-            subtitle="Subtitle"
-            avatar="images/jsa-128.jpg"
-          />
-          <CardMedia
-            overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-          >
-            <img src="images/nature-600-337.jpg" alt="" />
-          </CardMedia>
-          <CardTitle title="Card title" subtitle="Card subtitle" />
+          <CardTitle title="Welcome" subtitle="We're excited to help you connect" />
           <CardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+            Immitia helps connect immigrants to Canada with locals who speak the language.
+            Get started by telling us if you are an immigrant or local!
           </CardText>
           <CardActions>
-            <FlatButton label="Action1" />
-            <FlatButton label="Action2" />
+            <FlatButton label="Immigrant" onClick={() => this.props.history.push('/dashboard')}/>
+            <FlatButton label="Local" onClick={() => this.props.history.push('/dashboard')}/>
           </CardActions>
         </Card>
       </div>
