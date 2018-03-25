@@ -1,3 +1,26 @@
 .thisishome{
   text-align:center;
+
+  font-size:50px;
+
+  color:#2196F3;
+}
+
+.description{
+  text-align:center;
+
+  font-size:20px;
+}
+
+.description span{
+  background-color: #2196F3;
+
+  color:white;
+  padding:20px;
+}
+
+.bigLine{
+  height: 10px;
+  border-bottom: 4px solid #2196F3;
+  margin: 50px;
 }
