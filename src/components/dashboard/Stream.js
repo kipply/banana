@@ -32,7 +32,6 @@ class Stream extends Component {
   componentWillMount() {
     this.authListener = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
-        this.props.history.push('/');
       } else {
         this.setState({ user });
       }

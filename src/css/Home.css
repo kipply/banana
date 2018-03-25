@@ -20,7 +20,7 @@
 }
 
 .main {
-  background-image: url('../photos/bg.png');
+  background-image: url('../photos/bg.jpg');
   display: flex;
   flex-direction: column;
   height: 100vh;
