@@ -131,7 +131,7 @@ class Profile extends Component {
                   maxHeight={200}
                 >
                 <MenuItem value={"EN"} primaryText="English" />
-                <MenuItem value={"FR"} primaryText="Friday" />
+                <MenuItem value={"FR"} primaryText="French" />
                 </SelectField>
               </Col>
               <Col lg={8} className="profile-pic-container">

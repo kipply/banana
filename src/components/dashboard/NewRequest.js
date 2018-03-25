@@ -23,6 +23,87 @@ for (let i = 0; i < 100; i++ ) {
   items.push(<MenuItem value={i} key={i} primaryText={`Item ${i}`} />);
 }
 
+const languageOptions = [];
+
+const languages = {
+    "AF":"Afrikanns",
+    "SQ":"Albanian",
+    "AR":"Arabic",
+    "HY":"Armenian",
+    "EU":"Basque",
+    "BN":"Bengali",
+    "BG":"Bulgarian",
+    "CA":"Catalan",
+    "KM":"Cambodian",
+    "ZH":"Chinese (Mandarin)",
+    "HR":"Croation",
+    "CS":"Czech",
+    "DA":"Danish",
+    "NL":"Dutch",
+    "EN":"English",
+    "ET":"Estonian",
+    "FJ":"Fiji",
+    "FI":"Finnish",
+    "FR":"French",
+    "KA":"Georgian",
+    "DE":"German",
+    "EL":"Greek",
+    "GU":"Gujarati",
+    "HE":"Hebrew",
+    "HI":"Hindi",
+    "HU":"Hungarian",
+    "IS":"Icelandic",
+    "ID":"Indonesian",
+    "GA":"Irish",
+    "IT":"Italian",
+    "JA":"Japanese",
+    "JW":"Javanese",
+    "KO":"Korean",
+    "LA":"Latin",
+    "LV":"Latvian",
+    "LT":"Lithuanian",
+    "MK":"Macedonian",
+    "MS":"Malay",
+    "ML":"Malayalam",
+    "MT":"Maltese",
+    "MI":"Maori",
+    "MR":"Marathi",
+    "MN":"Mongolian",
+    "NE":"Nepali",
+    "NO":"Norwegian",
+    "FA":"Persian",
+    "PL":"Polish",
+    "PT":"Portuguese",
+    "PA":"Punjabi",
+    "QU":"Quechua",
+    "RO":"Romanian",
+    "RU":"Russian",
+    "SM":"Samoan",
+    "SR":"Serbian",
+    "SK":"Slovak",
+    "SL":"Slovenian",
+    "ES":"Spanish",
+    "SW":"Swahili",
+    "SV":"Swedish",
+    "TA":"Tamil",
+    "TT":"Tatar",
+    "TE":"Telugu",
+    "TH":"Thai",
+    "BO":"Tibetan",
+    "TO":"Tonga",
+    "TR":"Turkish",
+    "UK":"Ukranian",
+    "UR":"Urdu",
+    "UZ":"Uzbek",
+    "VI":"Vietnamese",
+    "CY":"Welsh",
+    "XH":"Xhosa"
+}
+
+for (lang in languages) {
+  languageOptions.push(<MenuItem value={lang} key={languages.indexOf(lang)} primaryText={`Item ${languages[lang]}`} />);
+}
+
 class NewRequest extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +111,7 @@ class NewRequest extends Component {
     this.state = {
       user: firebase.auth().currentUser,
       request: '',
-      language: "EN",
+      language: 10,
       points: '',
       toastOpen: false,
       toastMessage: '',
@@ -47,19 +128,8 @@ class NewRequest extends Component {
         this.props.history.push('/');
       } else {
         this.setState({ user });
+
         const profileRef = firebase.database().ref(`users/${this.state.user.uid}/profile`);
-
-        profileRef.once('value', (snapshot) => {
-          const profile = snapshot.val();
-
-          firebase.storage().ref('user-dps').child(`${this.state.user.uid}.jpg`).getDownloadURL()
-            .then((url) => {
-              this.setState({
-                name: profile.name,
-                image: url,
-              });
-            });
-        });
       }
     });
   }
@@ -122,12 +192,7 @@ class NewRequest extends Component {
       <div className="new-request">
         <Paper className="new-request-container" zDepth={1}>
           <Row>
-            <div className="pprofile-pic-container">
-              <div className="pprofile-image-container">
-                <img className="pprofile-image" src={this.state.image} alt="profile" />
-              </div>
-            </div>
-            <div className="vertical-center">{this.state.name}</div>
+            persons name and profile
           </Row>
           <Row>
             <TextField
@@ -146,7 +211,6 @@ class NewRequest extends Component {
             onChange={this.handleLangChang}
             maxHeight={200}
           >
-          <MenuItem value={"AF"} primaryText="Afrikanns" /> <MenuItem value={"SQ"} primaryText="Albanian" /> <MenuItem value={"AR"} primaryText="Arabic" /> <MenuItem value={"HY"} primaryText="Armenian" /> <MenuItem value={"EU"} primaryText="Basque" /> <MenuItem value={"BN"} primaryText="Bengali" /> <MenuItem value={"BG"} primaryText="Bulgarian" /> <MenuItem value={"CA"} primaryText="Catalan" /> <MenuItem value={"KM"} primaryText="Cambodian" /> <MenuItem value={"ZH"} primaryText="Chinese (Mandarin)" /> <MenuItem value={"HR"} primaryText="Croation" /> <MenuItem value={"CS"} primaryText="Czech" /> <MenuItem value={"DA"} primaryText="Danish" /> <MenuItem value={"NL"} primaryText="Dutch" /> <MenuItem value={"EN"} primaryText="English" /> <MenuItem value={"ET"} primaryText="Estonian" /> <MenuItem value={"FJ"} primaryText="Fiji" /> <MenuItem value={"FI"} primaryText="Finnish" /> <MenuItem value={"FR"} primaryText="French" /> <MenuItem value={"KA"} primaryText="Georgian" /> <MenuItem value={"DE"} primaryText="German" /> <MenuItem value={"EL"} primaryText="Greek" /> <MenuItem value={"GU"} primaryText="Gujarati" /> <MenuItem value={"HE"} primaryText="Hebrew" /> <MenuItem value={"HI"} primaryText="Hindi" /> <MenuItem value={"HU"} primaryText="Hungarian" /> <MenuItem value={"IS"} primaryText="Icelandic" /> <MenuItem value={"ID"} primaryText="Indonesian" /> <MenuItem value={"GA"} primaryText="Irish" /> <MenuItem value={"IT"} primaryText="Italian" /> <MenuItem value={"JA"} primaryText="Japanese" /> <MenuItem value={"JW"} primaryText="Javanese" /> <MenuItem value={"KO"} primaryText="Korean" /> <MenuItem value={"LA"} primaryText="Latin" /> <MenuItem value={"LV"} primaryText="Latvian" /> <MenuItem value={"LT"} primaryText="Lithuanian" /> <MenuItem value={"MK"} primaryText="Macedonian" /> <MenuItem value={"MS"} primaryText="Malay" /> <MenuItem value={"ML"} primaryText="Malayalam" /> <MenuItem value={"MT"} primaryText="Maltese" /> <MenuItem value={"MI"} primaryText="Maori" /> <MenuItem value={"MR"} primaryText="Marathi" /> <MenuItem value={"MN"} primaryText="Mongolian" /> <MenuItem value={"NE"} primaryText="Nepali" /> <MenuItem value={"NO"} primaryText="Norwegian" /> <MenuItem value={"FA"} primaryText="Persian" /> <MenuItem value={"PL"} primaryText="Polish" /> <MenuItem value={"PT"} primaryText="Portuguese" /> <MenuItem value={"PA"} primaryText="Punjabi" /> <MenuItem value={"QU"} primaryText="Quechua" /> <MenuItem value={"RO"} primaryText="Romanian" /> <MenuItem value={"RU"} primaryText="Russian" /> <MenuItem value={"SM"} primaryText="Samoan" /> <MenuItem value={"SR"} primaryText="Serbian" /> <MenuItem value={"SK"} primaryText="Slovak" /> <MenuItem value={"SL"} primaryText="Slovenian" /> <MenuItem value={"ES"} primaryText="Spanish" /> <MenuItem value={"SW"} primaryText="Swahili" /> <MenuItem value={"SV"} primaryText="Swedish " /> <MenuItem value={"TA"} primaryText="Tamil" /> <MenuItem value={"TT"} primaryText="Tatar" /> <MenuItem value={"TE"} primaryText="Telugu" /> <MenuItem value={"TH"} primaryText="Thai" /> <MenuItem value={"BO"} primaryText="Tibetan" /> <MenuItem value={"TO"} primaryText="Tonga" /> <MenuItem value={"TR"} primaryText="Turkish" /> <MenuItem value={"UK"} primaryText="Ukranian" /> <MenuItem value={"UR"} primaryText="Urdu" /> <MenuItem value={"UZ"} primaryText="Uzbek" /> <MenuItem value={"VI"} primaryText="Vietnamese" /> <MenuItem value={"CY"} primaryText="Welsh" /> <MenuItem value={"XH"} primaryText="Xhosa" />
 
           </SelectField>
           </Row>
