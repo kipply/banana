@@ -172,21 +172,6 @@ class NewRequest extends Component {
     }
   }
 
-  handleImageChange(e) {
-    e.preventDefault();
-
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file,
-        image: reader.result,
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-
   render() {
     return (
       <div className="new-request">
