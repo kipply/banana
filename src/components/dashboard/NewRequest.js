@@ -15,13 +15,85 @@ import Floppy from 'react-icons/lib/fa/floppy-o';
 
 import { Grid, Col, Row } from 'react-styled-flexboxgrid';
 
+const languageOptions = [];
 
-// delettttt
-const items = [];
-items.push(<MenuItem primaryText={`banaan`} />);
+const languages = {
+    "AF":"Afrikanns",
+    "SQ":"Albanian",
+    "AR":"Arabic",
+    "HY":"Armenian",
+    "EU":"Basque",
+    "BN":"Bengali",
+    "BG":"Bulgarian",
+    "CA":"Catalan",
+    "KM":"Cambodian",
+    "ZH":"Chinese (Mandarin)",
+    "HR":"Croation",
+    "CS":"Czech",
+    "DA":"Danish",
+    "NL":"Dutch",
+    "EN":"English",
+    "ET":"Estonian",
+    "FJ":"Fiji",
+    "FI":"Finnish",
+    "FR":"French",
+    "KA":"Georgian",
+    "DE":"German",
+    "EL":"Greek",
+    "GU":"Gujarati",
+    "HE":"Hebrew",
+    "HI":"Hindi",
+    "HU":"Hungarian",
+    "IS":"Icelandic",
+    "ID":"Indonesian",
+    "GA":"Irish",
+    "IT":"Italian",
+    "JA":"Japanese",
+    "JW":"Javanese",
+    "KO":"Korean",
+    "LA":"Latin",
+    "LV":"Latvian",
+    "LT":"Lithuanian",
+    "MK":"Macedonian",
+    "MS":"Malay",
+    "ML":"Malayalam",
+    "MT":"Maltese",
+    "MI":"Maori",
+    "MR":"Marathi",
+    "MN":"Mongolian",
+    "NE":"Nepali",
+    "NO":"Norwegian",
+    "FA":"Persian",
+    "PL":"Polish",
+    "PT":"Portuguese",
+    "PA":"Punjabi",
+    "QU":"Quechua",
+    "RO":"Romanian",
+    "RU":"Russian",
+    "SM":"Samoan",
+    "SR":"Serbian",
+    "SK":"Slovak",
+    "SL":"Slovenian",
+    "ES":"Spanish",
+    "SW":"Swahili",
+    "SV":"Swedish",
+    "TA":"Tamil",
+    "TT":"Tatar",
+    "TE":"Telugu",
+    "TH":"Thai",
+    "BO":"Tibetan",
+    "TO":"Tonga",
+    "TR":"Turkish",
+    "UK":"Ukranian",
+    "UR":"Urdu",
+    "UZ":"Uzbek",
+    "VI":"Vietnamese",
+    "CY":"Welsh",
+    "XH":"Xhosa"
+}
 
-for (let i = 0; i < 100; i++ ) {
-  items.push(<MenuItem value={i} key={i} primaryText={`Item ${i}`} />);
+for (var lang in languages) {
+  languageOptions.push(<MenuItem value={lang}  primaryText={`${languages[lang]}`} />);
 }
 
 class NewRequest extends Component {
@@ -31,7 +103,7 @@ class NewRequest extends Component {
     this.state = {
       user: firebase.auth().currentUser,
       request: '',
-      language: 10,
+      language: 'EN',
       difficulty: 0.5,
       toastOpen: false,
       toastMessage: '',
@@ -48,19 +120,8 @@ class NewRequest extends Component {
         this.props.history.push('/');
       } else {
         this.setState({ user });
+
         const profileRef = firebase.database().ref(`users/${this.state.user.uid}/profile`);
-
-        profileRef.once('value', (snapshot) => {
-          const profile = snapshot.val();
-
-          firebase.storage().ref('user-dps').child(`${this.state.user.uid}.jpg`).getDownloadURL()
-            .then((url) => {
-              this.setState({
-                name: profile.name,
-                image: url,
-              });
-            });
-        });
       }
     });
   }
@@ -91,6 +152,7 @@ class NewRequest extends Component {
         const usersRef = firebase.database().ref(`/users/${this.state.user.uid}/requests/`);
         usersRef.push({
           id: newId,
+          lang: this.state.language,
         });
         this.setState({ toastMessage: 'Successfully made request!' });
         this.setState({ toastOpen: true });
@@ -118,12 +180,7 @@ class NewRequest extends Component {
       <div className="new-request">
         <Paper className="new-request-container" zDepth={1}>
           <Row>
-            <div className="pprofile-pic-container">
-              <div className="pprofile-image-container">
-                <img className="pprofile-image" src={this.state.image} alt="profile" />
-              </div>
-            </div>
-            <div className="vertical-center">{this.state.name}</div>
+            persons name and profile
           </Row>
           <Row>
             <TextField
@@ -149,7 +206,7 @@ class NewRequest extends Component {
                 onChange={this.handleLangChang}
                 maxHeight={200}
               >
-                {items}
+                {languageOptions}
               </SelectField>
             </Col>
             <Col>
