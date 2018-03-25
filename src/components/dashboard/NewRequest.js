@@ -117,7 +117,6 @@ class NewRequest extends Component {
   componentWillMount() {
     this.authListener = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
-        this.props.history.push('/');
       } else {
         this.setState({ user });
         const profileRef = firebase.database().ref(`users/${this.state.user.uid}/profile`);
