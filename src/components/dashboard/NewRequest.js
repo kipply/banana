@@ -100,7 +100,7 @@ const languages = {
     "XH":"Xhosa"
 }
 
-for (lang in languages) {
+for (var lang in languages) {
   languageOptions.push(<MenuItem value={lang} key={languages.indexOf(lang)} primaryText={`Item ${languages[lang]}`} />);
 }
 
@@ -211,7 +211,7 @@ class NewRequest extends Component {
             onChange={this.handleLangChang}
             maxHeight={200}
           >
-
+            {languageOptions}
           </SelectField>
           </Row>
           <RaisedButton
